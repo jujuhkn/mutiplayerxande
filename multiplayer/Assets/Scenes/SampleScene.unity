@@ -1926,7 +1926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PenduloSimples
   velocidade: 2
   anguloMax: 60
-  forcaEmpurrao: 10
+  forcaEmpurrao: 40
 --- !u!212 &1981392393
 SpriteRenderer:
   m_ObjectHideFlags: 0

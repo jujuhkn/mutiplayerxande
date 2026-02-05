@@ -8,7 +8,7 @@ public class PenduloSimples : MonoBehaviour
     public float anguloMax = 60f;
 
     [Header("Impacto no Player")]
-    public float forcaEmpurrao = 10f;
+    public float forcaEmpurrao = 60f; // FORÇA ALTA
 
     void Update()
     {
@@ -18,9 +18,8 @@ public class PenduloSimples : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D colisao)
     {
-        // Verifica as duas tags
-        if (colisao.gameObject.CompareTag("FirePlayer") ||
-            colisao.gameObject.CompareTag("WaterPlayer"))
+        if (colisao.gameObject.CompareTag("Fire") ||
+            colisao.gameObject.CompareTag("Water"))
         {
             Rigidbody2D rbPlayer = colisao.gameObject.GetComponent<Rigidbody2D>();
 
@@ -34,3 +33,5 @@ public class PenduloSimples : MonoBehaviour
         }
     }
 }
+
+
