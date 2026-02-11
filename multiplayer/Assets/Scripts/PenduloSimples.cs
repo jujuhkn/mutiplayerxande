@@ -3,33 +3,33 @@ using UnityEngine;
 public class PenduloSimples : MonoBehaviour
 {
 
-    [Header("Movimento")]
-    public float velocidade = 2f;
-    public float anguloMax = 60f;
+    public Sprite fireBallSprite;   // bola do Fire
+    public Sprite waterBallSprite;  // bola do Water
 
-    [Header("Impacto no Player")]
-    public float forcaEmpurrao = 60f; // FORÇA ALTA
-
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        float angulo = Mathf.Sin(Time.time * velocidade) * anguloMax;
-        transform.rotation = Quaternion.Euler(0, 0, angulo);
+        // Se Fire pegou
+        if (collision.CompareTag("Fire"))
+        {
+            MudarSprite(collision.gameObject, fireBallSprite);
+            Destroy(gameObject);
+        }
+
+        // Se Water pegou
+        if (collision.CompareTag("Water"))
+        {
+            MudarSprite(collision.gameObject, waterBallSprite);
+            Destroy(gameObject);
+        }
     }
 
-    void OnCollisionEnter2D(Collision2D colisao)
+    void MudarSprite(GameObject player, Sprite novaSprite)
     {
-        if (colisao.gameObject.CompareTag("Fire") ||
-            colisao.gameObject.CompareTag("Water"))
+        SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
+
+        if (sr != null)
         {
-            Rigidbody2D rbPlayer = colisao.gameObject.GetComponent<Rigidbody2D>();
-
-            if (rbPlayer != null)
-            {
-                Vector2 direcao = colisao.transform.position - transform.position;
-                direcao = direcao.normalized;
-
-                rbPlayer.AddForce(direcao * forcaEmpurrao, ForceMode2D.Impulse);
-            }
+            sr.sprite = novaSprite;
         }
     }
 }
