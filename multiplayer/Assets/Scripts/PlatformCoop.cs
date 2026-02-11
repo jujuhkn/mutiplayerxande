@@ -6,14 +6,13 @@ public class PlatformCoop : MonoBehaviour
     public Transform pointDown;
     public float speed = 2f;
 
-    private bool playerOn = false;
-    private bool lockedDown = false;
+    public bool buttonPressed = false; // controlado pelo botão
 
     void Update()
     {
-        // Se tem player em cima OU botão ativado → desce
-        if (playerOn || lockedDown)
+        if (buttonPressed)
         {
+            // Desce
             transform.position = Vector2.MoveTowards(
                 transform.position,
                 pointDown.position,
@@ -22,35 +21,12 @@ public class PlatformCoop : MonoBehaviour
         }
         else
         {
-            // Senão sobe
+            // Sobe
             transform.position = Vector2.MoveTowards(
                 transform.position,
                 pointUp.position,
                 speed * Time.deltaTime
             );
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Fire") ||
-            collision.gameObject.CompareTag("Water"))
-        {
-            playerOn = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (!lockedDown)
-        {
-            playerOn = false;
-        }
-    }
-
-    // Chamado pelo botão
-    public void LockPlatform()
-    {
-        lockedDown = true;
     }
 }
