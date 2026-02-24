@@ -2,6 +2,9 @@
 
 public class PlayerRevive : MonoBehaviour
 {
+    public GameObject normalSprite;
+    public GameObject bubbleSprite;
+
     public float floatAmplitude = 0.2f;
     public float floatFrequency = 2f;
 
@@ -21,6 +24,8 @@ public class PlayerRevive : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         respawnPoint = transform.position;
+
+        bubbleSprite.SetActive(false);
     }
 
     void Update()
@@ -39,7 +44,6 @@ public class PlayerRevive : MonoBehaviour
         isDead = true;
         deadPlayers++;
 
-        // Se os dois morrerem → reset total
         if (deadPlayers >= 2)
         {
             ResetAllPlayers();
@@ -54,8 +58,11 @@ public class PlayerRevive : MonoBehaviour
         startY = respawnPoint.y;
         transform.position = respawnPoint;
 
-        // Collider continua ativo como trigger
         col.isTrigger = true;
+
+        // TROCA SPRITE
+        normalSprite.SetActive(false);
+        bubbleSprite.SetActive(true);
     }
 
     public void Revive()
@@ -66,6 +73,10 @@ public class PlayerRevive : MonoBehaviour
 
         rb.gravityScale = 1f;
         col.isTrigger = false;
+
+        // VOLTA SPRITE NORMAL
+        normalSprite.SetActive(true);
+        bubbleSprite.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -89,9 +100,11 @@ public class PlayerRevive : MonoBehaviour
             p.rb.gravityScale = 1f;
             p.col.isTrigger = false;
             p.transform.position = p.respawnPoint;
+
+            p.normalSprite.SetActive(true);
+            p.bubbleSprite.SetActive(false);
         }
 
         deadPlayers = 0;
-    
-}
+    }
 }
