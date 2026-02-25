@@ -12,6 +12,10 @@ public class Player1Movement : MonoBehaviour
     public float groundRadius = 0.2f;
     public LayerMask groundLayer;
 
+    public GameObject bulletPrefab;// teste
+    public Transform firePoint; //teste 
+
+
     private bool isGrounded;
 
     void Start()
@@ -23,7 +27,20 @@ public class Player1Movement : MonoBehaviour
     {
         Move();
         Jump();
+
+
+        if (Input.GetKeyDown(KeyCode.Space))// teste
+        {
+            Shoot();// teste
+        }
     }
+
+    void Shoot()// teste
+    {
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);// teste
+    }
+
+
 
     void Move()
     {
