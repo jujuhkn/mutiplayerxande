@@ -9,12 +9,11 @@ public class Player1Movement : MonoBehaviour
     private Rigidbody2D rb;
 
     public Transform groundCheck;
-    public float groundRadius = 0.2f;
+    public float groundRadius = 0.3f;
     public LayerMask groundLayer;
 
-    public GameObject bulletPrefab;// teste
-    public Transform firePoint; //teste 
-
+    public GameObject bulletPrefab;
+    public Transform firePoint;
 
     private bool isGrounded;
 
@@ -28,25 +27,21 @@ public class Player1Movement : MonoBehaviour
         Move();
         Jump();
 
-
-        if (Input.GetKeyDown(KeyCode.Space))// teste
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot();// teste
+            Shoot();
         }
     }
 
-    void Shoot()// teste
+    void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);// teste
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
-
-
 
     void Move()
     {
         float moveInput = 0f;
 
-        // Movimento só nas setas
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             moveInput = -1f;
@@ -61,14 +56,12 @@ public class Player1Movement : MonoBehaviour
 
     void Jump()
     {
-        // Checa se está no chão
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
             groundRadius,
             groundLayer
         );
 
-        // Pulo na seta pra cima
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
